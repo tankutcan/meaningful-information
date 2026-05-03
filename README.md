@@ -28,7 +28,7 @@ $$h_t = -\log P_M(e_t \mid e_{\lt t}, \text{prefix})$$
 
 The **cumulative information content** at position $n$ is:
 
-$$C(n) = \sum_{t=1}^{n} h_t = -\sum_{t=1}^{n} \log P_M(e_t \mid e_{\lt t}, \text{prefix})$$
+$$I(n) = \sum_{t=1}^{n} h_t = -\sum_{t=1}^{n} \log P_M(e_t \mid e_{\lt t}, \text{prefix})$$
 
 This is the quantity plotted in the cumulative $-\log P$ figures. It grows approximately linearly with $n$, and its slope is the entropy rate.
 
@@ -36,7 +36,7 @@ This is the quantity plotted in the cumulative $-\log P$ figures. It grows appro
 
 The **entropy rate** (cross-entropy per token) is the slope of the cumulative information content:
 
-$$H_M = \frac{C(T)}{T} = \frac{1}{T} \sum_{t=1}^{T} h_t = -\frac{1}{T} \sum_{t=1}^{T} \log P_M(e_t \mid e_{\lt t}, \text{prefix})$$
+$$H_M = \frac{I(T)}{T} = \frac{1}{T} \sum_{t=1}^{T} h_t = -\frac{1}{T} \sum_{t=1}^{T} \log P_M(e_t \mid e_{\lt t}, \text{prefix})$$
 
 We compute this under different prefix conditions:
 - $H_M(E_0)$: no prefix (predict E0 cold)
