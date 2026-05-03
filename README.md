@@ -22,13 +22,13 @@ and measure the per-token log-probability of each token in E0 given everything t
 
 ### Cumulative information content
 
-For each token $e_t$ in the target sequence, the model assigns a conditional probability $P_M(e_t \mid e_{<t}, \text{prefix})$. The **token-level information content** (surprisal) is:
+For each token $e_t$ in the target sequence, the model assigns a conditional probability $P_M(e_t \mid e_{\lt t}, \text{prefix})$. The **token-level information content** (surprisal) is:
 
-$$h_t = -\log P_M(e_t \mid e_{<t}, \text{prefix})$$
+$$h_t = -\log P_M(e_t \mid e_{\lt t}, \text{prefix})$$
 
 The **cumulative information content** at position $n$ is:
 
-$$C(n) = \sum_{t=1}^{n} h_t = -\sum_{t=1}^{n} \log P_M(e_t \mid e_{<t}, \text{prefix})$$
+$$C(n) = \sum_{t=1}^{n} h_t = -\sum_{t=1}^{n} \log P_M(e_t \mid e_{\lt t}, \text{prefix})$$
 
 This is the quantity plotted in the cumulative $-\log P$ figures. It grows approximately linearly with $n$, and its slope is the entropy rate.
 
@@ -36,7 +36,7 @@ This is the quantity plotted in the cumulative $-\log P$ figures. It grows appro
 
 The **entropy rate** (cross-entropy per token) is the slope of the cumulative information content:
 
-$$H_M = \frac{C(T)}{T} = \frac{1}{T} \sum_{t=1}^{T} h_t = -\frac{1}{T} \sum_{t=1}^{T} \log P_M(e_t \mid e_{<t}, \text{prefix})$$
+$$H_M = \frac{C(T)}{T} = \frac{1}{T} \sum_{t=1}^{T} h_t = -\frac{1}{T} \sum_{t=1}^{T} \log P_M(e_t \mid e_{\lt t}, \text{prefix})$$
 
 We compute this under different prefix conditions:
 - $H_M(E_0)$: no prefix (predict E0 cold)
@@ -59,7 +59,7 @@ measures what fraction of the model's uncertainty is resolved by the retokenized
 
 Comparing three prefix conditions decomposes $H_M(E_0)$ into three components:
 
-$$H_M(E_0) = \underbrace{H_M(E_0) - H_M(E_0 \mid E')}_{\text{content resolved}} + \underbrace{H_M(E_0 \mid E') - H_M(E_0 \mid E_0)}_{\text{tokenization uncertainty}} + \underbrace{H_M(E_0 \mid E_0)}_{\text{residual}}$$
+$$H_M(E_0) = \underbrace{H_M(E_0) - H_M(E_0 \mid E')}\_{\text{content resolved}} + \underbrace{H_M(E_0 \mid E') - H_M(E_0 \mid E_0)}\_{\text{tokenization uncertainty}} + \underbrace{H_M(E_0 \mid E_0)}\_{\text{residual}}$$
 
 - **Content resolved:** the text content that the model successfully extracts from the retokenized prefix.
 - **Tokenization uncertainty:** the additional entropy from not knowing which segmentation will follow. After seeing E', the model knows the text but is uncertain whether the next occurrence will use canonical boundaries.
